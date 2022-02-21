@@ -2,24 +2,24 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.NUMERIC_STD.ALL;
 
-ENTITY datapath1 IS
+ENTITY datapath IS
             PORT (  clk: IN STD_LOGIC;
                 reset: IN STD_LOGIC;
                 Instr : OUT std_logic_vector (31 downto 0);
                 ALUControl : IN STD_LOGIC_VECTOR (2 downto 0);
                 MemWrite : IN STD_LOGIC;
-                regEnable : IN std_logic ;
                 regWrite : in std_logic);
             
-END datapath1;
+END datapath;
 
 
-ARCHITECTURE Behavioral OF datapath1 IS
+ARCHITECTURE Behavioral OF datapath IS
 
     COMPONENT PC IS
         PORT (  clk: IN STD_LOGIC;
                 reset: IN STD_LOGIC;
-                newPC: OUT std_logic_vector (31 downto 0));
+                Input: IN std_logic_vector (31 downto 0);
+                Output: OUT std_logic_vector (31 downto 0));
     END COMPONENT;
     
     COMPONENT ALU is
@@ -47,28 +47,51 @@ ARCHITECTURE Behavioral OF datapath1 IS
                 b_adr : IN STD_LOGIC_VECTOR (4 downto 0);
                 c_adr : IN STD_LOGIC_VECTOR (4 downto 0);
                 reset : IN STD_LOGIC;
-                enable: IN std_logic ;
-                write : IN STD_LOGIC;
+                RegWrite : IN STD_LOGIC;
                 clk : IN STD_LOGIC;
                 a_data : OUT STD_LOGIC_VECTOR (31 downto 0);
                 b_data : OUT STD_LOGIC_VECTOR (31 downto 0);
                 c_data : IN STD_LOGIC_VECTOR (31 downto 0) );   
      END COMPONENT;
     
-    
-    
+    COMPONENT PCinc is
+        Port (  Input : IN std_logic_vector (31 downto 0);
+                Output : OUT std_logic_vector (31 downto 0));   
+            
+    end COMPONENT;
 
-signal newPC_int: std_logic_vector;
-signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0);
-signal DataLine0 : STD_LOGIC_VECTOR (31 downto 0);
-signal DataLine1 : STD_LOGIC_VECTOR (31 downto 0);
-signal DataLine2 : STD_LOGIC_VECTOR (31 downto 0);
-signal DataLine3 : STD_LOGIC_VECTOR (31 downto 0);
+    
+--Intern adresses
+signal CurrentInstruction: std_logic_vector (31 downto 0);
+signal rs1 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(19 downto 15);
+signal rs2 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(24 downto 20);
+signal imm : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(11 downto 7);
+signal extender_int : STD_LOGIC_VECTOR (23 downto 0):= CurrentInstruction(37 downto 7);
+signal instr_int : std_logic_vector (31 downto 0);
+signal newPC_int: STD_LOGIC_VECTOR (31 downto 0);
+--Intern Data
+signal DataLineA : STD_LOGIC_VECTOR (31 downto 0);
+signal DataLineA1 : STD_LOGIC_VECTOR (31 downto 0);
+signal DataLineA2 : STD_LOGIC_VECTOR (31 downto 0);
+signal DataLineB : STD_LOGIC_VECTOR (31 downto 0);
+signal DataLineC : STD_LOGIC_VECTOR (31 downto 0);
+--Intern control
+signal RegWrite_int : std_logic:= regWrite ;
+signal MemWrite_int : std_logic:= MemWrite ;
+signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0):=ALUControl ;
+
+
+
+
+
 
 begin --architecture
 
-X1: PC PORT MAP (clk, reset, newPC_int);
---X2: ALU PORT MAP (
-
+X1: PC PORT MAP (clk, reset, newPC_int, instr_int );
+X2: PCinc PORT MAP (instr_int, newPC_int);
+X3: I_mem PORT MAP (instr_int , CurrentInstruction);
+X4: regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
+X5: ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineA2);
+X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, DataLineC);
 
 end Behavioral; --architecture
