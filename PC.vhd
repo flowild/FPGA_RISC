@@ -4,7 +4,7 @@ USE IEEE.NUMERIC_STD.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 ENTITY PC IS
-    PORT (  clock: IN STD_LOGIC;
+    PORT (  clk: IN STD_LOGIC;
             reset: IN STD_LOGIC;
             newPC: OUT std_logic_vector (31 downto 0));
 
@@ -14,7 +14,7 @@ architecture Behavioral of PC is
 
 begin
 
-PROCESS (reset, clock)
+PROCESS (reset, clk)
         
             VARIABLE value: INTEGER RANGE 0 TO 127 :=0;
             BEGIN
@@ -22,7 +22,7 @@ PROCESS (reset, clock)
             IF (reset = '1') THEN
                 value := 0;
                 
-            ELSIF (clock'EVENT AND clock = '1') THEN
+            ELSIF (clk'EVENT AND clk = '1') THEN
                 value := value + 4;  
                 newPC <= std_logic_vector(value);
                 
