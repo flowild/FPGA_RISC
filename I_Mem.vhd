@@ -14,7 +14,7 @@ architecture Behavioral of I_mem is
 
     TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
     SIGNAL I_MEM: MEM_TYPE
-        :=(x"00402083",x"00108133",x"110823",OTHERS => x"00000000");
+        :=(x"00402083",x"00108133",x"00110823",OTHERS => x"00000000");
         
 
 

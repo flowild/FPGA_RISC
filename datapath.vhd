@@ -4,11 +4,12 @@ USE IEEE.NUMERIC_STD.ALL;
 
 ENTITY datapath IS
             PORT (  clk: IN STD_LOGIC;
-                reset: IN STD_LOGIC;
-                Instr : OUT std_logic_vector (31 downto 0);
-                ALUControl : IN STD_LOGIC_VECTOR (2 downto 0);
-                MemWrite : IN STD_LOGIC;
-                regWrite : in std_logic);
+                    reset: IN STD_LOGIC;
+                    Instr : OUT std_logic_vector (31 downto 0);
+                    ALUControl : IN STD_LOGIC_VECTOR (2 downto 0);
+                    MemWrite : IN STD_LOGIC;
+                    regWrite : in std_logic;
+                    immScr : IN std_logic_vector (1 downto 0));  
             
 END datapath;
 
@@ -59,7 +60,15 @@ ARCHITECTURE Behavioral OF datapath IS
                 Output : OUT std_logic_vector (31 downto 0));   
             
     end COMPONENT;
-
+    
+    COMPONENT Extender is
+            Port (  Input : IN std_logic_vector (23 downto 0);
+                    ImmExt : OUT std_logic_vector (31 downto 0);
+                    immScr : IN std_logic_vector (1 downto 0));   
+    end COMPONENT;    
+    
+    
+    
     
 --Intern adresses
 signal CurrentInstruction: std_logic_vector (31 downto 0);
@@ -79,6 +88,7 @@ signal DataLineC : STD_LOGIC_VECTOR (31 downto 0);
 signal RegWrite_int : std_logic:= regWrite ;
 signal MemWrite_int : std_logic:= MemWrite ;
 signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0):=ALUControl ;
+signal immScr_int : std_logic_vector (1 downto 0);  
 
 
 
@@ -93,5 +103,7 @@ X3: I_mem PORT MAP (instr_int , CurrentInstruction);
 X4: regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
 X5: ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineA2);
 X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, DataLineC);
+X7: Extender PORT MAP ( extender_int , DataLineA2, immScr_int );
+
 
 end Behavioral; --architecture
