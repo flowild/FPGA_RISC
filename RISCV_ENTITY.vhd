@@ -13,7 +13,7 @@ ARCHITECTURE Behavioral OF RISCV_ENTITY IS
     COMPONENT datapath IS
         PORT (  clk: IN STD_LOGIC;
                 reset: IN STD_LOGIC;
-                Instr : OUT std_logic_vector (31 downto 0);
+                CurrentInstructionOut : OUT std_logic_vector (31 downto 0);
                 ALUControl : IN STD_LOGIC_VECTOR (2 downto 0);
                 MemWrite : IN STD_LOGIC;
                 regWrite : in std_logic;

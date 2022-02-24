@@ -5,7 +5,7 @@ USE IEEE.NUMERIC_STD.ALL;
 ENTITY datapath IS
             PORT (  clk: IN STD_LOGIC;
                     reset: IN STD_LOGIC;
-                    Instr : OUT std_logic_vector (31 downto 0);
+                    CurrentInstructionOut : OUT std_logic_vector (31 downto 0);
                     ALUControl : IN STD_LOGIC_VECTOR (2 downto 0);
                     MemWrite : IN STD_LOGIC;
                     regWrite : in std_logic;
@@ -92,11 +92,16 @@ signal immScr_int : std_logic_vector (1 downto 0);
 
 
 
-
-
-
-begin --architecture
-
+begin
+    process (clk)
+        begin
+            IF (clk'event and clk = '1') THEN
+                CurrentInstructionOut <= CurrentInstruction ;
+            END IF;
+    end process;
+    
+    
+ --architecture    
 X1: PC PORT MAP (clk, reset, newPC_int, instr_int );
 X2: PCinc PORT MAP (instr_int, newPC_int);
 X3: I_mem PORT MAP (instr_int , CurrentInstruction);
@@ -106,4 +111,4 @@ X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, DataLineC);
 X7: Extender PORT MAP ( extender_int , DataLineA2, immScr_int );
 
 
-end Behavioral; --architecture
+end Behavioral;
