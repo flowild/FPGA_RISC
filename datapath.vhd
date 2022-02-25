@@ -62,9 +62,9 @@ ARCHITECTURE Behavioral OF datapath IS
     end COMPONENT;
     
     COMPONENT Extender is
-            Port (  Input : IN std_logic_vector (23 downto 0);
-                    ImmExt : OUT std_logic_vector (31 downto 0);
-                    immScr : IN std_logic_vector (1 downto 0));   
+            Port (  Input : IN std_logic_vector (24 downto 0);
+                    Output : OUT std_logic_vector (31 downto 0);
+                    immScr : IN std_logic_vector (1 downto 0));     
     end COMPONENT;    
     
     
