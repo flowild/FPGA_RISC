@@ -46,9 +46,12 @@ DUT : Extender PORT MAP ( extender_int , DataLineA2, immScr_int );
 process
     begin
     
-    
-    
-    
+    wait FOR 50ns;
+    immScr_int <= "01";
+    wait FOR 50ns;
+    extender_int  <= "1000000001000000001000001";
+    --extender_int  <= "0000000001000000001000001";
+    wait FOR 50ns;
     
 end process;
      

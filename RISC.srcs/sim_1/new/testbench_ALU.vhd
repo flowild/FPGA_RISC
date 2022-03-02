@@ -43,7 +43,7 @@ signal immScr_int : std_logic_vector (1 downto 0);
 
 begin
 DUT : ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineA2);
---DUT : regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
+
 process
     begin
     
