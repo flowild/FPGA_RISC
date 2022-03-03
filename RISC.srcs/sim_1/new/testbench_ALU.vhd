@@ -47,21 +47,30 @@ DUT : ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineA2);
 process
     begin
     
+    AluControl_int <= "000";
+    wait for 33ns;
+    DataLineA1 <= x"FFFFFFFF";
     
-    
+    wait for 22ns;
+    DataLineA2 <= x"00000002";
+    wait for 50ns;
+    AluControl_int <= "010";
+    wait for 50ns;
+    AluControl_int <= "011";
+    wait for 33ns;
     
     
 end process;
      
-process
-    begin
+--process
+--    begin
     
-         --PC_int  <= x"00000000";
-         wait FOR 50ns; 
+--         --PC_int  <= x"00000000";
+--         --wait FOR 50ns; 
      
                 
         
-end process;    
+--end process;    
     
 
 end Behavioral;

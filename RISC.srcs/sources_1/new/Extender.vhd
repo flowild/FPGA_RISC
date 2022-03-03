@@ -28,20 +28,8 @@ begin
                Output (31 downto 12) <= (preload0) when (Input(24) = '0') ELSE
                                         (preload1) when (Input(24) = '1') ;
                                         --ELSE "000000000000";
-                     
-               --load word
-               --help(11 downto 0) <= x"fff";
-               --help(11 downto 0) <= Input(11 downto 0);
-               --Output(11 downto 0) <= Input(11 downto 0);
-               --helper (31 downto 25) <= (splitOut7);
-               --helper (19 downto 0) <= (preload1);
-               
-               
---               Output (11 downto 0) <= Input(24 downto 13);-- when (immScr = "00");
-                
-                    
-                              
-              
+
+
                  loadOut(11 downto 0) <= Input(24 downto 13);
                  buff(4 downto 0) <= Input(4 downto 0);
                  buff(11 downto 5) <= Input(24 downto 18);
@@ -52,5 +40,3 @@ begin
                     "000000000000" WHEN Others;
 
 end Dataflow;
-
-

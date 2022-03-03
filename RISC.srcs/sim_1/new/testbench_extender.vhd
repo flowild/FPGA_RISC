@@ -11,8 +11,7 @@ architecture Behavioral of testbench_extender is
 component Extender is
     Port (  Input : IN std_logic_vector (24 downto 0);
             Output : OUT std_logic_vector (31 downto 0);
-            immScr : IN std_logic_vector (1 downto 0));
-    
+            immScr : IN std_logic_vector (1 downto 0));     
            
 end component;
 
@@ -31,7 +30,6 @@ signal newPC_int: STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineA : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineA1 : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineA2 : STD_LOGIC_VECTOR (31 downto 0);
-
 signal DataLineB : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineC : STD_LOGIC_VECTOR (31 downto 0);
 --Intern control
@@ -42,10 +40,8 @@ signal immScr_int : std_logic_vector (1 downto 0);
 
 
 
-
-
 begin
-DUT : Extender PORT MAP ( extender_int , DataLineA2, immScr_int);
+DUT : Extender PORT MAP ( extender_int , DataLineA2, immScr_int );
 --DUT : regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
 process
     begin
@@ -53,7 +49,7 @@ process
     wait FOR 50ns;
     immScr_int <= "01";
     wait FOR 50ns;
-    extender_int  <= "1000000000000000101010101";
+    extender_int  <= "1000000001000000001000001";
     --extender_int  <= "0000000001000000001000001";
     wait FOR 50ns;
     
