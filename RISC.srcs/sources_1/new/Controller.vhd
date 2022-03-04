@@ -4,12 +4,14 @@ USE IEEE.NUMERIC_STD.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Controller is
-Port ( clk : IN STD_LOGIC;
-       OPcode : IN std_logic_vector (6 downto 0);
-       ALUControl : OUT std_logic_vector (2 downto 0);
-       MemWrite : Out STD_LOGIC;
-       regWrite : OUT std_logic;
-       immScr : OUT std_logic_vector (1 downto 0)); 
+Port (         clk : IN STD_LOGIC;
+               OPcode : IN std_logic_vector (6 downto 0);
+               ALUControl : OUT STD_LOGIC_VECTOR (2 downto 0);
+               MemWrite : Out STD_LOGIC;
+               regWrite : OUT std_logic;
+               immScr : OUT std_logic_vector (1 downto 0); 
+               AluScr : OUT std_logic;
+               ResultScr : OUT std_logic);  
 
 end Controller;
 
@@ -26,6 +28,8 @@ architecture Behavioral of Controller is
                         MemWrite <= '0';
                         regWrite <= '1';   
                         immScr <= "00";
+                        AluScr <= '1';
+                        ResultScr <= '1';
                         
                     when "0110011" => --add
                     
@@ -33,6 +37,8 @@ architecture Behavioral of Controller is
                         MemWrite <= '0';
                         regWrite <= '1';   
                         --immScr <= "xx";
+                        AluScr <= '0';
+                        ResultScr <= '0';
                         
                     when "0100011" => --store
                     
@@ -40,6 +46,8 @@ architecture Behavioral of Controller is
                         MemWrite <= '1';
                         regWrite <= '0';   
                         immScr <= "01";
+                        AluScr <= '1';
+                        --ResultScr <= 'x';
                         
                     when others =>
                     
@@ -47,6 +55,8 @@ architecture Behavioral of Controller is
                         MemWrite <= '0';
                         regWrite <= '0';
                         --immScr <= "xx";
+                        --AluScr <= 'x';
+                        --ResultScr <= 'x';
                         
                 end case;
 

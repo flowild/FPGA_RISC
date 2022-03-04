@@ -2,18 +2,17 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.ALL;
 
-entity testbench_Dmem is
+entity testbench_MPlex is
 --  Port ( );
-end testbench_Dmem;
+end testbench_MPlex;
 
-architecture Behavioral of testbench_Dmem is
+architecture Behavioral of testbench_MPlex is
 
-component D_mem is
-    Port (  Adr : IN STD_LOGIC_VECTOR (31 downto 0);
-            WriteData : IN STD_LOGIC_VECTOR (31 downto 0);
-            MemWrite: IN std_logic ;
-            clk : IN STD_LOGIC;
-            ReadData: OUT STD_LOGIC_VECTOR (31 downto 0));
+component MPlex IS
+    PORT (  Input0: IN std_logic_vector (31 downto 0);
+            Input1: IN std_logic_vector (31 downto 0);
+            Output: OUT std_logic_vector (31 downto 0);
+            Control: IN std_logic);
            
 end component;
 
@@ -39,41 +38,42 @@ signal ReadData_int : STD_LOGIC_VECTOR (31 downto 0);
 --Intern control
 signal RegWrite_int : std_logic ;
 signal MemWrite_int : std_logic ;
-signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0) ;
-signal immScr_int : std_logic_vector (1 downto 0);  
-signal AluScr_int : std_logic  ;
+signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0);
+signal immScr_int : std_logic_vector (1 downto 0) ;  
+signal AluScr_int : std_logic ;
 signal ResultScr_int : std_logic  ;
 
 
 
 begin
-DUT : D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, ReadData_int );
---DUT : regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
+DUT : MPlex PORT MAP (DataLineB , DataLineA2 ,DataLineB1 , AluScr_int ); --aluplexer
+
 process
     begin
     
-    DatalineA <= x"00000001";
-    wait for 333ns;
-    DatalineB <= x"F0F0F0F0";
-    wait for 333ns;
-    MemWrite_int <= '0';
-    wait for 333ns;
-    MemWrite_int <= '1';
-    wait for 333ns;
-    MemWrite_int <= '0';
-    wait for 333ns;
+        
+        DataLineB <= x"0F0F0F0F";
+        wait for 232 ns;
+        DataLineA2 <= x"000FFF0A";
+        wait for 132 ns;
+        AluScr_int <= '1';
+        wait for 333 ns;
+        
+        AluScr_int <= '0';
+        wait for 132 ns;
+        
     
 end process;
      
 process
     begin
     
+         --PC_int  <= x"00000000";
          wait FOR 50ns; 
          clk <= '1';
          wait FOR 50ns;      
          clk <= '0';
-                    
-        
+         
 end process;    
     
 
