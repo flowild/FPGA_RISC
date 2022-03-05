@@ -10,7 +10,7 @@ entity I_mem is
 end I_mem ;
 
     
-architecture Behavioral of I_mem is
+architecture Dataflow of I_mem is
 
     TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
     SIGNAL I_MEM: MEM_TYPE
@@ -20,17 +20,15 @@ architecture Behavioral of I_mem is
         --OTHERS => x"00000000000000000000000000000000");
         
 
-
 begin
 
-    PROCESS (PC) IS
     
         --VARIABLE adr : integer;
         
-        BEGIN
+
                 --adr := (integer(unsigned(PC))) * integer(0.25);
                 Instr <= I_MEM(to_integer(unsigned(PC)));
                 
-    END PROCESS;
 
-end Behavioral;
+
+end Dataflow ;

@@ -16,14 +16,14 @@ end component;
 
 --signal reset : STD_LOGIC := '0';
 --signal clk : STD_LOGIC := '0';
-signal PC_int : std_logic_vector (31 downto 0):= x"00000000"; 
-signal Instr_int : std_logic_vector (31 downto 0); 
+signal PC : std_logic_vector (31 downto 0); 
+signal Instr : std_logic_vector (31 downto 0); 
 
 
 
 begin
 
-DUT : I_mem port map (PC_int, Instr_int );
+DUT : I_mem port map (PC, Instr );
 process
     begin
     
@@ -36,14 +36,14 @@ end process;
 process
     begin
     
-         PC_int  <= x"00000000";
-         wait FOR 50ns; 
-         PC_int  <= x"00000004";
-         wait FOR 50ns; 
-         PC_int  <= x"00000008";
-         wait FOR 50ns; 
-         PC_int  <= x"0000000C";
-         wait FOR 50ns;          
+         PC  <= x"00000000";
+         wait FOR 100ns; 
+         PC  <= x"00000001";
+         wait FOR 100ns; 
+         PC  <= x"00000002";
+         wait FOR 100ns; 
+         PC  <= x"00000003";
+         wait FOR 100ns;          
                 
         
 end process;    

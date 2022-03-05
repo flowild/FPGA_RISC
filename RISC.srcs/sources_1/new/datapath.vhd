@@ -12,6 +12,7 @@ ENTITY datapath IS
                     immScr : IN std_logic_vector (1 downto 0);
                     AluScr : in std_logic;
                     ResultScr : in std_logic;
+                    ProbeInstr : OUT std_logic_vector (31 downto 0);
                     ProbeDmemA : Out std_logic_vector (31 downto 0);
                     ProbeDmemB : Out std_logic_vector (31 downto 0);
                     ProbeDmemC : Out std_logic_vector (31 downto 0));  
@@ -19,7 +20,7 @@ ENTITY datapath IS
 END datapath;
 
 
-ARCHITECTURE Behavioral OF datapath IS
+ARCHITECTURE Dataflow OF datapath IS
 
     COMPONENT PC IS
         PORT (  clk: IN STD_LOGIC;
@@ -85,11 +86,11 @@ ARCHITECTURE Behavioral OF datapath IS
     
 --Intern adresses
 signal CurrentInstruction: std_logic_vector (31 downto 0);
-signal rs1 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(19 downto 15);
-signal rs2 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(24 downto 20);
-signal imm : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(11 downto 7);
-signal extender_int : STD_LOGIC_VECTOR (24 downto 0):= CurrentInstruction(31 downto 7);
-signal instr_int : std_logic_vector (31 downto 0);
+--signal rs1 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(19 downto 15);
+--signal rs2 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(24 downto 20);
+--signal imm : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(11 downto 7);
+--signal extender_int : STD_LOGIC_VECTOR (24 downto 0):= CurrentInstruction(31 downto 7);
+signal PC_int : std_logic_vector (31 downto 0);
 signal newPC_int: STD_LOGIC_VECTOR (31 downto 0);
 --Intern Data
 signal DataLineA : STD_LOGIC_VECTOR (31 downto 0);
@@ -100,34 +101,35 @@ signal DataLineB1 : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineC : STD_LOGIC_VECTOR (31 downto 0);
 signal ReadData_int : STD_LOGIC_VECTOR (31 downto 0);
 --Intern control
-signal RegWrite_int : std_logic:= regWrite ;
-signal MemWrite_int : std_logic:= MemWrite ;
-signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0):=ALUControl ;
-signal immScr_int : std_logic_vector (1 downto 0):= immScr ;  
-signal AluScr_int : std_logic := AluScr ;
-signal ResultScr_int : std_logic := ResultScr  ;
+--signal RegWrite_int : std_logic:= regWrite ;
+--signal MemWrite_int : std_logic:= MemWrite ;
+--signal AluControl_int : STD_LOGIC_VECTOR (2 downto 0):=ALUControl ;
+--signal immScr_int : std_logic_vector (1 downto 0):= immScr ;  
+--signal AluScr_int : std_logic := AluScr ;
+--signal ResultScr_int : std_logic := ResultScr  ;
 
 
 
 begin
-    process (clk)
-        begin
-            IF (clk'event and clk = '1') THEN
-                CurrentInstructionOut <= CurrentInstruction ;
-            END IF;
-    end process;
+
+                CurrentInstructionOut <= CurrentInstruction;
+                ProbeInstr <= CurrentInstruction  ;
+--                rs1 <= CurrentInstruction(19 downto 15);
+--                rs2 <= CurrentInstruction(24 downto 20);
+--                imm <= CurrentInstruction(11 downto 7);
+
     
     
  --architecture    
-X1: PC PORT MAP (clk, reset, newPC_int, instr_int );
-X2: PCinc PORT MAP (instr_int, newPC_int);
-X3: I_mem PORT MAP (instr_int , CurrentInstruction);
-X4: regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
-X5: ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineB1);
-X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, ReadData_int,ProbeDmemA ,ProbeDmemB ,ProbeDmemC  );
-X7: Extender PORT MAP ( extender_int , DataLineA2, immScr_int );
-X8: MPlex PORT MAP (DataLineB , DataLineA2 ,DataLineB1 , AluScr_int );
-X9: MPlex PORT MAP (DataLineA , ReadData_int , DataLineC ,ResultScr_int );
+X1: PC PORT MAP (clk, reset, newPC_int, PC_int );
+X2: PCinc PORT MAP (PC_int, newPC_int);
+X3: I_mem PORT MAP (PC_int , CurrentInstruction);
+X4: regfile PORT MAP (CurrentInstruction(19 downto 15), CurrentInstruction(24 downto 20), CurrentInstruction(11 downto 7), reset, RegWrite , clk, DataLineA1, DataLineB, DataLineC);
+X5: ALU PORT MAP (DataLineA ,AluControl , DataLineA1, DataLineB1);
+X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite, clk, ReadData_int ,ProbeDmemA ,ProbeDmemB ,ProbeDmemC  );
+X7: Extender PORT MAP ( CurrentInstruction(31 downto 7) , DataLineA2, immScr );
+X8: MPlex PORT MAP (DataLineB , DataLineA2 ,DataLineB1 , AluScr );
+X9: MPlex PORT MAP (DataLineA , ReadData_int , DataLineC ,ResultScr );
 
 
-end Behavioral;
+end Dataflow ;

@@ -29,8 +29,10 @@ DUT : PC port map (clk, reset, Input,Output);
 process	
     begin	
 
-
-
+reset <= '1';
+wait FOR 10ns; 	
+reset <= '0';
+wait for 1000ns;
 
 
 end process;	

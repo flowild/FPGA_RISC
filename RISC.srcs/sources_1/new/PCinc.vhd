@@ -9,12 +9,11 @@ entity PCinc is
             
 end PCinc;
 
-architecture Behavioral of PCinc is
+architecture Dataflow of PCinc is
 
 begin
-    process (Input)
-        begin
-            Output <= (Input + "00000000000000000000000000000001"); --1 addieren?
+
+            Output <= (Input + x"00000001"); --1 addieren?
             --Output <= (Input + "00000000000000000000000000000100"); --4 addieren
-    end process;
-end Behavioral;
+
+end Dataflow;

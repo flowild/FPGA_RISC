@@ -20,7 +20,7 @@ PROCESS (reset, clk)
             BEGIN
 
             IF (reset = '1') THEN
-                Output <= "00000000000000000000000000000000";
+                Output <= x"00000000";
                 
             ELSIF (clk'EVENT AND clk = '1') THEN
             
