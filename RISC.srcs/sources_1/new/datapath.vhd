@@ -15,7 +15,9 @@ ENTITY datapath IS
                     ProbeInstr : OUT std_logic_vector (31 downto 0);
                     ProbeDmemA : Out std_logic_vector (31 downto 0);
                     ProbeDmemB : Out std_logic_vector (31 downto 0);
-                    ProbeDmemC : Out std_logic_vector (31 downto 0));  
+                    ProbeDmemC : Out std_logic_vector (31 downto 0);
+                    ProbeRegA : Out std_logic_vector (31 downto 0);
+                    ProbeRegB : Out std_logic_vector (31 downto 0));  
             
 END datapath;
 
@@ -61,7 +63,9 @@ ARCHITECTURE Dataflow OF datapath IS
                 clk : IN STD_LOGIC;
                 a_data : OUT STD_LOGIC_VECTOR (31 downto 0);
                 b_data : OUT STD_LOGIC_VECTOR (31 downto 0);
-                c_data : IN STD_LOGIC_VECTOR (31 downto 0) );   
+                c_data : IN STD_LOGIC_VECTOR (31 downto 0) ;
+                ProberegA : OUT STD_LOGIC_VECTOR (31 downto 0);
+                ProberegB :OUT STD_LOGIC_VECTOR (31 downto 0));
      END COMPONENT;
     
     COMPONENT PCinc is
@@ -118,13 +122,15 @@ begin
 --                rs2 <= CurrentInstruction(24 downto 20);
 --                imm <= CurrentInstruction(11 downto 7);
 
+        
+    
     
     
  --architecture    
 X1: PC PORT MAP (clk, reset, newPC_int, PC_int );
 X2: PCinc PORT MAP (PC_int, newPC_int);
 X3: I_mem PORT MAP (PC_int , CurrentInstruction);
-X4: regfile PORT MAP (CurrentInstruction(19 downto 15), CurrentInstruction(24 downto 20), CurrentInstruction(11 downto 7), reset, RegWrite , clk, DataLineA1, DataLineB, DataLineC);
+X4: regfile PORT MAP (CurrentInstruction(19 downto 15), CurrentInstruction(24 downto 20), CurrentInstruction(11 downto 7), reset, RegWrite , clk, DataLineA1, DataLineB, DataLineC,ProbeRegA,ProbeRegB);
 X5: ALU PORT MAP (DataLineA ,AluControl , DataLineA1, DataLineB1);
 X6: D_mem PORT MAP (DataLineA, DataLineB, MemWrite, clk, ReadData_int ,ProbeDmemA ,ProbeDmemB ,ProbeDmemC  );
 X7: Extender PORT MAP ( CurrentInstruction(31 downto 7) , DataLineA2, immScr );

@@ -12,7 +12,10 @@ entity regfile is
             clk : IN STD_LOGIC;
             a_data : OUT STD_LOGIC_VECTOR (31 downto 0);
             b_data : OUT STD_LOGIC_VECTOR (31 downto 0);
-            c_data : IN STD_LOGIC_VECTOR (31 downto 0)) ;
+            c_data : IN STD_LOGIC_VECTOR (31 downto 0) ;
+            ProberegA : OUT STD_LOGIC_VECTOR (31 downto 0);
+            ProberegB :OUT STD_LOGIC_VECTOR (31 downto 0));
+            
 --            help_out : Out std_logic_vector (31 downto 0);
 --            help_out_integer : Out Integer);
 end regfile;
@@ -50,7 +53,16 @@ begin
             END IF;
     END PROCESS;
 
-
+Process(clk)
+    begin
+        IF (clk'event and clk='1') THEN
+            ProberegA <= regarray(1);     
+            ProberegB <= regarray(2);    
+              
+        END IF;
+    
+    
+end process;
 
 
 

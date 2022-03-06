@@ -17,10 +17,10 @@ signal loadOut : std_logic_vector (11 downto 0):= Input (24 downto 13) ;
 signal preload1 : std_logic_vector (19 downto 0):= "11111111111111111111";
 signal preload0 : std_logic_vector (19 downto 0):= "00000000000000000000";
 
-signal splitOut7 : std_logic_vector (6 downto 0):= Input (24 downto 18);
+--signal splitOut7 : std_logic_vector (6 downto 0):= Input (24 downto 18);
 
 
-signal splitOut5 : std_logic_vector (4 downto 0):= Input (4 downto 0);
+--signal splitOut5 : std_logic_vector (4 downto 0):= Input (4 downto 0);
 signal buff : std_logic_vector (11 downto 0);
 
 begin

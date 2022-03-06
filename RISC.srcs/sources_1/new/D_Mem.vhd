@@ -19,12 +19,22 @@ architecture Behavioral of D_Mem is
 
 TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
     SIGNAL D_MEM: MEM_TYPE 
-            :=(x"00000002",x"00000007",OTHERS => x"00000000");
+            :=( x"00000002",--0
+                x"00000007",--1
+                x"00000008",--2
+                x"00000009",--3
+                x"0000000A",--4
+                x"0000000B",--5
+                x"0000000C",--6
+                x"0000000D",--7
+                x"0000000E",--8
+                x"0000000F",--9
+                OTHERS => x"00000000");
 begin
 PROCESS (clk, Adr , WriteData, MemWrite ) IS
         begin
         
-            IF (clk'event and clk='1') THEN
+            IF (clk'event and clk='0') THEN
                 case MemWrite is 
                     when '0' => --read
                         ReadData <= D_MEM(to_integer(unsigned(Adr)));    
@@ -40,9 +50,9 @@ PROCESS (clk, Adr , WriteData, MemWrite ) IS
 Process(clk)
     begin
         IF (clk'event and clk='0') THEN
-            ProbeDmemA <= D_MEM(0);     
-            ProbeDmemB <= D_MEM(1);    
-            ProbeDmemC <= D_MEM(2);    
+            ProbeDmemA <= D_MEM(4);     
+            ProbeDmemB <= D_MEM(8);    
+            ProbeDmemC <= D_MEM(10);    
         END IF;
     
     
