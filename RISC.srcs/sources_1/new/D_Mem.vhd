@@ -31,28 +31,29 @@ TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
                 x"0000000F",--9
                 OTHERS => x"00000000");
 begin
-PROCESS (clk, Adr , WriteData, MemWrite ) IS
+PROCESS (clk, MemWrite, Adr, WriteData  )
         begin
-        
-            IF (clk'event and clk='0') THEN
-                case MemWrite is 
-                    when '0' => --read
-                        ReadData <= D_MEM(to_integer(unsigned(Adr)));    
-                    when '1' => --write                        
-                        D_MEM(to_integer(unsigned(Adr))) <= WriteData;
-                    when others => --error 
-                        
-                end case;
-                
+            
+            IF (MemWrite = '0') THEN --read
+                ReadData <= D_MEM(to_integer(unsigned(Adr)));
+                ProbeDmemC <= D_MEM(to_integer(unsigned(Adr))); 
+            
+            
+            elsif (clk='0' and clk'event) THEN --write
+
+                D_MEM(to_integer(unsigned(Adr))) <= WriteData;
+--                ProbeDmemA <= D_MEM(4);     
+--                ProbeDmemB <= D_MEM(8);
+
             END IF;
     END PROCESS;
     
 Process(clk)
     begin
-        IF (clk'event and clk='0') THEN
+        IF (clk'event) THEN
             ProbeDmemA <= D_MEM(4);     
             ProbeDmemB <= D_MEM(8);    
-            ProbeDmemC <= D_MEM(10);    
+               
         END IF;
     
     

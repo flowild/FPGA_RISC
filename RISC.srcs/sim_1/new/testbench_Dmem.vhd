@@ -13,7 +13,10 @@ component D_mem is
             WriteData : IN STD_LOGIC_VECTOR (31 downto 0);
             MemWrite: IN std_logic ;
             clk : IN STD_LOGIC;
-            ReadData: OUT STD_LOGIC_VECTOR (31 downto 0));
+            ReadData: OUT STD_LOGIC_VECTOR (31 downto 0);
+            ProbeDmemA : Out std_logic_vector (31 downto 0);
+            ProbeDmemB : Out std_logic_vector (31 downto 0);
+            ProbeDmemC : Out std_logic_vector (31 downto 0));
            
 end component;
 
@@ -44,24 +47,28 @@ signal immScr_int : std_logic_vector (1 downto 0);
 signal AluScr_int : std_logic  ;
 signal ResultScr_int : std_logic  ;
 
-
+signal ProbeDmemA : STD_LOGIC_VECTOR (31 downto 0);
+signal ProbeDmemB : STD_LOGIC_VECTOR (31 downto 0);
+signal ProbeDmemC : STD_LOGIC_VECTOR (31 downto 0);
 
 begin
-DUT : D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, ReadData_int );
+DUT : D_mem PORT MAP (DataLineA, DataLineB, MemWrite_int, clk, ReadData_int, ProbeDmemA,ProbeDmemB,ProbeDmemC );
 --DUT : regfile PORT MAP (rs1, rs2, imm, reset, RegWrite_int , clk, DataLineA1, DataLineB, DataLineC);
 process
     begin
     
-    DatalineA <= x"00000001";
-    wait for 333ns;
-    DatalineB <= x"F0F0F0F0";
-    wait for 333ns;
+    wait for 50ns;
+    DatalineA <= x"00000004";
+    DatalineB <= x"00000000";
     MemWrite_int <= '0';
-    wait for 333ns;
+    wait for 100ns;
+    DatalineA <= x"00000000";
+    DatalineB <= x"00000000";
+    wait for 100ns;
     MemWrite_int <= '1';
-    wait for 333ns;
-    MemWrite_int <= '0';
-    wait for 333ns;
+    DatalineA <= x"00000014";
+    DatalineB <= x"00000008";
+    wait for 100ns;
     
 end process;
      

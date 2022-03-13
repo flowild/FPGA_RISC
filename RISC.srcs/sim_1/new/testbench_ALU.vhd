@@ -32,6 +32,7 @@ signal DataLineA : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineA1 : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineA2 : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineB : STD_LOGIC_VECTOR (31 downto 0);
+signal DataLineB1 : STD_LOGIC_VECTOR (31 downto 0);
 signal DataLineC : STD_LOGIC_VECTOR (31 downto 0);
 --Intern control
 signal RegWrite_int : std_logic:= '0' ;
@@ -42,22 +43,21 @@ signal immScr_int : std_logic_vector (1 downto 0);
 
 
 begin
-DUT : ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineA2);
+DUT : ALU PORT MAP (DataLineA ,AluControl_int , DataLineA1, DataLineB1);
 
 process
     begin
     
     AluControl_int <= "000";
-    wait for 33ns;
-    DataLineA1 <= x"FFFFFFFF";
-    
-    wait for 22ns;
-    DataLineA2 <= x"00000002";
     wait for 50ns;
-    AluControl_int <= "010";
+    DataLineA1 <= x"00000000";
+    DataLineB1 <= x"00000002";
     wait for 50ns;
-    AluControl_int <= "011";
-    wait for 33ns;
+    DataLineA1 <= x"00000001";
+    DataLineB1 <= x"00000003";
+    wait for 50ns;
+
+
     
     
 end process;

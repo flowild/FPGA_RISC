@@ -8,11 +8,13 @@ ENTITY RISCV_ENTITY IS
             ProbeInstr : OUT std_logic_vector (31 downto 0);
             ProbeDmemA : Out std_logic_vector (31 downto 0);
             ProbeDmemB : Out std_logic_vector (31 downto 0);
-            ProbeDmemC : Out std_logic_vector (31 downto 0));  
+            ProbeDmemC : Out std_logic_vector (31 downto 0);
+            ProbeRegA : Out std_logic_vector (31 downto 0);  
+            ProbeRegB : Out std_logic_vector (31 downto 0));
             
 END RISCV_ENTITY;
 
-ARCHITECTURE Behavioral OF RISCV_ENTITY IS
+ARCHITECTURE dataflow OF RISCV_ENTITY IS
 
     COMPONENT datapath IS
         PORT (  clk: IN STD_LOGIC;
@@ -27,13 +29,14 @@ ARCHITECTURE Behavioral OF RISCV_ENTITY IS
                     ProbeInstr : OUT std_logic_vector (31 downto 0);
                     ProbeDmemA : Out std_logic_vector (31 downto 0);
                     ProbeDmemB : Out std_logic_vector (31 downto 0);
-                    ProbeDmemC : Out std_logic_vector (31 downto 0));  
+                    ProbeDmemC : Out std_logic_vector (31 downto 0);
+                    ProbeRegA : Out std_logic_vector (31 downto 0);
+                    ProbeRegB : Out std_logic_vector (31 downto 0));  
                 
     END COMPONENT;
     
     COMPONENT Controller is
-        Port ( clk : IN STD_LOGIC;
-               OPcode : IN std_logic_vector (6 downto 0);
+        Port ( OPcode : IN std_logic_vector (6 downto 0);
                ALUControl : OUT STD_LOGIC_VECTOR (2 downto 0);
                MemWrite : Out STD_LOGIC;
                regWrite : OUT std_logic;
@@ -52,10 +55,15 @@ signal immScr_int : std_logic_vector (1 downto 0);
 signal AluScr_int : std_logic ;
 signal ResultScr_int : std_logic  ;
 
-begin --architecture
+--signal dummy : std_logic_vector (31 downto 0);
+begin 
 
-X1: datapath PORT MAP (clk, reset, Instruction_int, ALUControl_int , MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int, ProbeInstr, ProbeDmemA ,ProbeDmemB ,ProbeDmemC   );
-X2: Controller PORT MAP (clk, Instruction_int(6 downto 0) , ALUControl_int ,MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int  );
+--ProbeInstr <= Instruction_int ;
 
 
-end Behavioral; --architecture
+--architecture
+X1: datapath PORT MAP (clk, reset, Instruction_int, ALUControl_int , MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int, ProbeInstr, ProbeDmemA ,ProbeDmemB ,ProbeDmemC, ProbeRegA, ProbeRegB    );
+X2: Controller PORT MAP ( Instruction_int(6 downto 0) , ALUControl_int ,MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int  );
+
+
+end dataflow; --architecture

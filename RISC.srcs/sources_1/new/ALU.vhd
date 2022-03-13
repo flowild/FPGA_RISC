@@ -11,9 +11,21 @@ entity ALU is
 
 end ALU;
 
+
 architecture Behavioral of ALU is
+--architecture Dataflow of ALU is
+
+--signal buff : std_logic_vector (31 downto 0);
 
 begin
+                
+--                ALUResult   <=  ScrA            when (ALUControl = "010") ELSE    --durchleiten
+--                                (ScrA + ScrB)   when (ALUControl = "000") ;    --add
+                                       
+
+
+
+
     process (ScrA, ScrB, ALUControl )
         begin
             case ALUControl is
@@ -28,3 +40,4 @@ begin
     end process;
 
 end Behavioral;
+--end Dataflow;

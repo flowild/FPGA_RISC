@@ -10,11 +10,13 @@ architecture Behavioral of tb_RISCV_ENTITY is
 
 component RISCV_ENTITY IS
             PORT (  reset: IN STD_LOGIC;
-                    clk: IN STD_LOGIC;
-                    ProbeInstr : Out std_logic_vector (31 downto 0);
-                    ProbeDmemA : Out std_logic_vector (31 downto 0);
-                    ProbeDmemB : Out std_logic_vector (31 downto 0);
-                    ProbeDmemC : Out std_logic_vector (31 downto 0)); 
+            clk: IN STD_LOGIC;
+            ProbeInstr : OUT std_logic_vector (31 downto 0);
+            ProbeDmemA : Out std_logic_vector (31 downto 0);
+            ProbeDmemB : Out std_logic_vector (31 downto 0);
+            ProbeDmemC : Out std_logic_vector (31 downto 0);
+            ProbeRegA : Out std_logic_vector (31 downto 0);  
+            ProbeRegB : Out std_logic_vector (31 downto 0));
            
 end component;
 
@@ -24,16 +26,16 @@ signal ProbeInstr : std_logic_vector (31 downto 0);
 signal ProbeDmemA : std_logic_vector (31 downto 0);
 signal ProbeDmemB : std_logic_vector (31 downto 0);
 signal ProbeDmemC : std_logic_vector (31 downto 0);
-
-
+signal ProbeRegA : std_logic_vector (31 downto 0);
+signal ProbeRegB : std_logic_vector (31 downto 0);
 
 begin
 
-DUT : RISCV_ENTITY port map (reset, clk, ProbeInstr ,ProbeDmemA, ProbeDmemB ,ProbeDmemC );
+DUT : RISCV_ENTITY port map (reset, clk, ProbeInstr ,ProbeDmemA, ProbeDmemB ,ProbeDmemC, ProbeRegA, ProbeRegB );
 process
     begin
     
-        wait for 51 ns;
+
         reset <= '1';
         wait for 5ns;
         reset <= '0';
@@ -45,10 +47,11 @@ end process;
 process
     begin
     
-       clk <= '1';
        wait FOR 50ns; 
        clk <= '0';
        wait FOR 50ns; 
+       clk <= '1';
+
         
 end process;
 

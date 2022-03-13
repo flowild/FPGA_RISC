@@ -13,8 +13,10 @@ entity regfile is
             a_data : OUT STD_LOGIC_VECTOR (31 downto 0);
             b_data : OUT STD_LOGIC_VECTOR (31 downto 0);
             c_data : IN STD_LOGIC_VECTOR (31 downto 0) ;
-            ProberegA : OUT STD_LOGIC_VECTOR (31 downto 0);
-            ProberegB :OUT STD_LOGIC_VECTOR (31 downto 0));
+            ProbeRegA : OUT STD_LOGIC_VECTOR (31 downto 0);
+            ProbeRegB : OUT STD_LOGIC_VECTOR (31 downto 0);
+            ProbeRegC : OUT STD_LOGIC_VECTOR (31 downto 0));
+            
             
 --            help_out : Out std_logic_vector (31 downto 0);
 --            help_out_integer : Out Integer);
@@ -30,15 +32,25 @@ begin
     PROCESS (clk, RegWrite, reset) IS
         BEGIN
             IF reset = '1' THEN
-                regarray <= (others => x"00000000");
+                --regarray <= (others => x"00000000");
+                regarray(0) <= x"00000000";
+                regarray(1) <= x"00000000";
+                regarray(2) <= x"00000000";
+                ProberegA <= x"FFFFFFFF";     
+                ProberegB <= x"FFFFFFFF";
+                ProberegC <= x"FFFFFFFF";    
                 
-            ELSE
+            ELSE --read
                 a_data <= regarray(to_integer(unsigned(a_adr)));
                 b_data <= regarray(to_integer(unsigned(b_adr)));
-                IF (clk'event and clk='1') THEN
-                    IF (RegWrite = '1') THEN
-                        regarray(to_integer(unsigned(c_adr))) <= c_data;
+                
+--                ProberegA <= regarray(0);     
+--                ProberegB <= regarray(1);    
+--                ProberegC <= regarray(2);
                         
+                --IF (clk'event and clk='0' and RegWrite = '1') THEN --write
+                  IF (clk'event and RegWrite = '1') THEN --write  
+                        regarray(to_integer(unsigned(c_adr))) <= c_data;
                         
 --                        regarray(0) <= x"00000111";
 --                        regarray(1) <= x"00001000";
@@ -48,17 +60,19 @@ begin
 --                        help_out <= regarray(to_integer(unsigned(c_adr)));
 --                        help_out_integer <= (to_integer(unsigned(c_adr))); 
                         
-                    END IF;
-                END IF;
+                    
+                  END IF;
             END IF;
     END PROCESS;
 
 Process(clk)
     begin
-        IF (clk'event and clk='1') THEN
-            ProberegA <= regarray(1);     
-            ProberegB <= regarray(2);    
-              
+        IF (clk'event) THEN
+            
+            ProberegA <= regarray(0);     
+            ProberegB <= regarray(1);    
+            ProberegC <= regarray(2);  
+            
         END IF;
     
     
