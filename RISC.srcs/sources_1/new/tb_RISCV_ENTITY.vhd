@@ -14,9 +14,9 @@ component RISCV_ENTITY IS
             ProbeInstr : OUT std_logic_vector (31 downto 0);
             ProbeDmemA : Out std_logic_vector (31 downto 0);
             ProbeDmemB : Out std_logic_vector (31 downto 0);
-            ProbeDmemC : Out std_logic_vector (31 downto 0);
-            ProbeRegA : Out std_logic_vector (31 downto 0);  
-            ProbeRegB : Out std_logic_vector (31 downto 0));
+            ProbeDmemC : Out std_logic_vector (31 downto 0));
+            --ProbeRegA : Out std_logic_vector (31 downto 0);  
+            --ProbeRegB : Out std_logic_vector (31 downto 0));
            
 end component;
 
@@ -26,12 +26,12 @@ signal ProbeInstr : std_logic_vector (31 downto 0);
 signal ProbeDmemA : std_logic_vector (31 downto 0);
 signal ProbeDmemB : std_logic_vector (31 downto 0);
 signal ProbeDmemC : std_logic_vector (31 downto 0);
-signal ProbeRegA : std_logic_vector (31 downto 0);
-signal ProbeRegB : std_logic_vector (31 downto 0);
+--signal ProbeRegA : std_logic_vector (31 downto 0);
+--signal ProbeRegB : std_logic_vector (31 downto 0);
 
 begin
 
-DUT : RISCV_ENTITY port map (reset, clk, ProbeInstr ,ProbeDmemA, ProbeDmemB ,ProbeDmemC, ProbeRegA, ProbeRegB );
+DUT : RISCV_ENTITY port map (reset, clk, ProbeInstr ,ProbeDmemA, ProbeDmemB ,ProbeDmemC );
 process
     begin
     

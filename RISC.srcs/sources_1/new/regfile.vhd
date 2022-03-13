@@ -29,16 +29,16 @@ architecture Behavioral of regfile is
     
 
 begin
-    PROCESS (clk, RegWrite, reset) IS
+    PROCESS (clk, RegWrite, reset, c_data) IS
         BEGIN
             IF reset = '1' THEN
                 --regarray <= (others => x"00000000");
                 regarray(0) <= x"00000000";
                 regarray(1) <= x"00000000";
                 regarray(2) <= x"00000000";
-                ProberegA <= x"FFFFFFFF";     
-                ProberegB <= x"FFFFFFFF";
-                ProberegC <= x"FFFFFFFF";    
+                ProberegA <= x"00000000";     
+                ProberegB <= x"00000000";
+                ProberegC <= x"00000000";    
                 
             ELSE --read
                 a_data <= regarray(to_integer(unsigned(a_adr)));
@@ -51,14 +51,10 @@ begin
                 --IF (clk'event and clk='0' and RegWrite = '1') THEN --write
                   IF (clk'event and RegWrite = '1') THEN --write  
                         regarray(to_integer(unsigned(c_adr))) <= c_data;
-                        
---                        regarray(0) <= x"00000111";
---                        regarray(1) <= x"00001000";
---                        regarray(2) <= x"00001001";
---                        regarray(3) <= x"00001011";
---                        regarray(4) <= x"00001100";
---                        help_out <= regarray(to_integer(unsigned(c_adr)));
---                        help_out_integer <= (to_integer(unsigned(c_adr))); 
+--                        ProberegC <= c_data;     
+--                        ProberegB <= regarray(1);    
+--                        ProberegC <= regarray(2);
+
                         
                     
                   END IF;

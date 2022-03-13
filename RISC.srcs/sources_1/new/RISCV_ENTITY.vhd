@@ -8,9 +8,9 @@ ENTITY RISCV_ENTITY IS
             ProbeInstr : OUT std_logic_vector (31 downto 0);
             ProbeDmemA : Out std_logic_vector (31 downto 0);
             ProbeDmemB : Out std_logic_vector (31 downto 0);
-            ProbeDmemC : Out std_logic_vector (31 downto 0);
-            ProbeRegA : Out std_logic_vector (31 downto 0);  
-            ProbeRegB : Out std_logic_vector (31 downto 0));
+            ProbeDmemC : Out std_logic_vector (31 downto 0));
+            --ProbeRegA : Out std_logic_vector (31 downto 0);  
+            --ProbeRegB : Out std_logic_vector (31 downto 0));
             
 END RISCV_ENTITY;
 
@@ -62,7 +62,7 @@ begin
 
 
 --architecture
-X1: datapath PORT MAP (clk, reset, Instruction_int, ALUControl_int , MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int, ProbeInstr, ProbeDmemA ,ProbeDmemB ,ProbeDmemC, ProbeRegA, ProbeRegB    );
+X1: datapath PORT MAP (clk, reset, Instruction_int, ALUControl_int , MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int, ProbeInstr, ProbeDmemA ,ProbeDmemB ,ProbeDmemC);
 X2: Controller PORT MAP ( Instruction_int(6 downto 0) , ALUControl_int ,MemWrite_int ,regWrite_int, immScr_int, AluScr_int ,ResultScr_int  );
 
 

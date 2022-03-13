@@ -36,13 +36,13 @@ PROCESS (clk, MemWrite, Adr, WriteData  )
             
             IF (MemWrite = '0') THEN --read
                 ReadData <= D_MEM(to_integer(unsigned(Adr)));
-                ProbeDmemC <= D_MEM(to_integer(unsigned(Adr))); 
+--                ProbeDmemC <= D_MEM(to_integer(unsigned(Adr))); 
             
             
             elsif (clk='0' and clk'event) THEN --write
 
                 D_MEM(to_integer(unsigned(Adr))) <= WriteData;
---                ProbeDmemA <= D_MEM(4);     
+--                ProbeDmemA <= WriteData;     
 --                ProbeDmemB <= D_MEM(8);
 
             END IF;
@@ -51,9 +51,9 @@ PROCESS (clk, MemWrite, Adr, WriteData  )
 Process(clk)
     begin
         IF (clk'event) THEN
-            ProbeDmemA <= D_MEM(4);     
-            ProbeDmemB <= D_MEM(8);    
-               
+            ProbeDmemA <= D_MEM(0);     
+            ProbeDmemB <= D_MEM(4);    
+            ProbeDmemc <= D_MEM(8);   
         END IF;
     
     
