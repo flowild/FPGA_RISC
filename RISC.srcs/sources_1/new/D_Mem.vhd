@@ -33,18 +33,19 @@ TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
 begin
 PROCESS (clk, MemWrite, Adr, WriteData  )
         begin
-            
-            IF (MemWrite = '0') THEN --read
-                ReadData <= D_MEM(to_integer(unsigned(Adr)));
---                ProbeDmemC <= D_MEM(to_integer(unsigned(Adr))); 
-            
-            
-            elsif (clk='0' and clk'event) THEN --write
+            IF (unsigned(Adr) < 128) THEN
+                IF (MemWrite = '0') THEN --read
+                    ReadData <= D_MEM(to_integer(unsigned(Adr)));
+    --                ProbeDmemC <= D_MEM(to_integer(unsigned(Adr))); 
+                
+                
+                elsif (clk='0' and clk'event) THEN --write
+    
+                    D_MEM(to_integer(unsigned(Adr))) <= WriteData;
+    --                ProbeDmemA <= WriteData;     
+    --                ProbeDmemB <= D_MEM(8);
 
-                D_MEM(to_integer(unsigned(Adr))) <= WriteData;
---                ProbeDmemA <= WriteData;     
---                ProbeDmemB <= D_MEM(8);
-
+                END IF;
             END IF;
     END PROCESS;
     
