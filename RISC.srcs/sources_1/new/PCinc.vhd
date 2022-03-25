@@ -13,7 +13,6 @@ architecture Dataflow of PCinc is
 
 begin
 
-            Output <= (Input + x"00000001"); --1 addieren?
-            --Output <= (Input + "00000000000000000000000000000100"); --4 addieren
+            Output <= (Input + x"00000001"); --1 addieren
 
 end Dataflow;

@@ -16,19 +16,17 @@ architecture Behavioral of PC is
 begin
 
 PROCESS (reset, clk)
-
-            BEGIN
+      BEGIN
 
             IF (reset = '1') THEN
                 Output <= x"00000000";
                 
             ELSIF (clk'EVENT AND clk = '1') THEN
-            
                 Output <= Input;
                 
             END IF;
 
-        END PROCESS;
+END PROCESS;
 
 
 end Behavioral;

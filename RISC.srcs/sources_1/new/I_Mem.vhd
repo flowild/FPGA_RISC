@@ -15,20 +15,11 @@ architecture Dataflow of I_mem is
     TYPE MEM_TYPE is ARRAY (0 to 127) OF std_logic_vector (31 downto 0);
     SIGNAL I_MEM: MEM_TYPE
         :=(x"00000000",x"00402083",x"00108133",x"00200423",OTHERS => x"00000000");
-        
-        --:=(x"00000000010000000010000010000011",x"00000000000100001000000100110011",x"00000000000100010000100000100011",
-        --OTHERS => x"00000000000000000000000000000000");
+
         
 
 begin
 
-    
-        --VARIABLE adr : integer;
-        
-
-                --adr := (integer(unsigned(PC))) * integer(0.25);
                 Instr <= I_MEM(to_integer(unsigned(PC)));
                 
-
-
 end Dataflow ;

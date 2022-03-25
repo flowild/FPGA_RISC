@@ -16,11 +16,6 @@ architecture Dataflow of Extender is
 signal loadOut : std_logic_vector (11 downto 0);
 signal preload1 : std_logic_vector (19 downto 0):= "11111111111111111111";
 signal preload0 : std_logic_vector (19 downto 0):= "00000000000000000000";
-
---signal splitOut7 : std_logic_vector (6 downto 0):= Input (24 downto 18);
-
-
---signal splitOut5 : std_logic_vector (4 downto 0):= Input (4 downto 0);
 signal buff : std_logic_vector (11 downto 0);
 
 begin
@@ -36,8 +31,7 @@ begin
                 
                 --output 
                 with immScr select 
-                Output(11 downto 0)     <=
-                                            loadOut WHEN "00",  --load
+                Output(11 downto 0)     <=  loadOut WHEN "00",  --load
                                             buff WHEN "01",     --store
                                             "000000000000" WHEN Others;
 

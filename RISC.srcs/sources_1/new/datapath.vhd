@@ -92,10 +92,6 @@ ARCHITECTURE Dataflow OF datapath IS
     
 --Intern adresses
 signal CurrentInstruction: std_logic_vector (31 downto 0);
---signal rs1 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(19 downto 15);
---signal rs2 : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(24 downto 20);
---signal imm : STD_LOGIC_VECTOR (4 downto 0):= CurrentInstruction(11 downto 7);
---signal extender_int : STD_LOGIC_VECTOR (24 downto 0):= CurrentInstruction(31 downto 7);
 signal PC_int : std_logic_vector (31 downto 0);
 signal newPC_int: STD_LOGIC_VECTOR (31 downto 0);
 --Intern Data
@@ -120,13 +116,7 @@ begin
 
                 CurrentInstructionOut <= CurrentInstruction;
                 ProbeInstr <= CurrentInstruction  ;
---                rs1 <= CurrentInstruction(19 downto 15);
---                rs2 <= CurrentInstruction(24 downto 20);
---                imm <= CurrentInstruction(11 downto 7);
-
-        
-    
-    
+ 
     
  --architecture    
 X1: PC PORT MAP (clk, reset, newPC_int, PC_int );

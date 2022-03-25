@@ -14,7 +14,6 @@ Port (         OPcode : IN std_logic_vector (6 downto 0);
 
 end Controller;
 
---architecture Behavioral of Controller is
 architecture Dataflow of Controller is
     begin
     
@@ -36,55 +35,5 @@ architecture Dataflow of Controller is
                 ResultScr   <=  '1' when (OPcode = "0000011") ELSE      --load
                                 '0' when (OPcode = "0110011") ;         --add
                                 --'x' when (OPcode = "0100011");          --store
-    
-    
-    
-    
-    
---        process (clk)
---            begin
-            
---                case OPcode is
---                    when "0000011" => --load
-                    
---                        ALUControl <= "000";
---                        MemWrite <= '0';
---                        regWrite <= '1';   
---                        immScr <= "00";
---                        AluScr <= '1';
---                        ResultScr <= '1';
-                        
---                    when "0110011" => --add
-                    
---                        ALUControl <= "000";
---                        MemWrite <= '0';
---                        regWrite <= '1';   
---                        --immScr <= "xx";
---                        AluScr <= '0';
---                        ResultScr <= '0';
-                        
---                    when "0100011" => --store
-                    
---                        ALUControl <= "000";
---                        MemWrite <= '1';
---                        regWrite <= '0';   
---                        immScr <= "01";
---                        AluScr <= '1';
---                        --ResultScr <= 'x';
-                        
---                    when others =>
-                    
---                        ALUControl <= "000";
---                        MemWrite <= '0';
---                        regWrite <= '0';
---                        --immScr <= "xx";
---                        --AluScr <= 'x';
---                        --ResultScr <= 'x';
-                        
---                end case;
 
---        end process;
-
-
---end Behavioral;
 end Dataflow ;

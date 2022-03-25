@@ -44,18 +44,11 @@ begin
                 a_data <= regarray(to_integer(unsigned(a_adr)));
                 b_data <= regarray(to_integer(unsigned(b_adr)));
                 
---                ProberegA <= regarray(0);     
---                ProberegB <= regarray(1);    
---                ProberegC <= regarray(2);
-                        
-                --IF (clk'event and clk='0' and RegWrite = '1') THEN --write
+
                   IF (clk'event and RegWrite = '1') THEN --write  
                         regarray(to_integer(unsigned(c_adr))) <= c_data;
---                        ProberegC <= c_data;     
---                        ProberegB <= regarray(1);    
---                        ProberegC <= regarray(2);
 
-                        
+                      
                     
                   END IF;
             END IF;

@@ -50,15 +50,14 @@ signal Instruction_int : std_logic_vector (31 downto 0);
 signal ALUControl_int : STD_LOGIC_VECTOR (2 downto 0);
 signal MemWrite_int : std_logic ;
 signal regWrite_int : std_logic ;
---signal OPcode_int : std_logic_vector (6 downto 0) := Instruction_int(6 downto 0);
 signal immScr_int : std_logic_vector (1 downto 0); 
 signal AluScr_int : std_logic ;
 signal ResultScr_int : std_logic  ;
 
---signal dummy : std_logic_vector (31 downto 0);
+
 begin 
 
---ProbeInstr <= Instruction_int ;
+
 
 
 --architecture
